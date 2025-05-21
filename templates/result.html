@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-banner {
+            background-color: #1a1a1a;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00bfff;
+            border-bottom: 1px solid #333;
+            width: 100%;
+        }
+
+        .main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            width: 300px;
+            background-color: #1f1f1f;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #333;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        .recent-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #333;
+        }
+
+        .recent-item img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .inference {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+
+        .timestamp {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            margin-top: 20px;
+            background-color: #007bff;
+            border: none;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 10px 2px rgba(0, 123, 255, 0.7);
+        }
+
+        #preview {
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .prediction-text {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .prediction-large {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .footer {
+            background-color: #1a1a1a;
+            text-align: center;
+            padding: 10px;
+            color: #ccc;
+            font-size: 1rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer a {
+            color: #00bfff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-banner">
+        Welcome to Handwritten OCR Recognizer
+    </div>
+
+    <div class="main">
+
+        <!-- Sidebar-->
+        <div class="sidebar">
+            <h2>Recent Predictions</h2>
+            {% for item in recent_predictions %}
+            <div class="recent-item">
+                <img src="{{ url_for('static', filename=item.image_path) }}" alt="Recent Image">
+                <div class="inference">Prediction: {{ item.label }}</div>
+                <div class="timestamp">{{ item.timestamp }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Main -->
+        <div class="main-content">
+            <div class="container">
+                <h1>Prediction Result</h1>
+                <img id="preview" src="{{ url_for('static', filename=image_path) }}" alt="Image Preview">
+                <p class="prediction-text">The model predicts: <span class="prediction-large">{{ label }}</span></p>
+                <a href="/" class="btn btn-primary">Upload Another Image</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer for GitHub-->
+    <div class="footer">
+        <a href="https://github.com/unstable91/Handwritten-OCR/" target="_blank">
+            <i class="fab fa-github"></i> View on GitHub
+        </a>
+    </div>
+
+</body>
+</html>
